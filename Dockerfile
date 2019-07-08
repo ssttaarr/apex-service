@@ -7,18 +7,18 @@ FROM tomcat:8.5-jdk11 as downloads
 # downloads/sqlcl-XXX.zip
 ARG SQLCL_ZIP=sqlcl-19.1.0.094.1619.zip
 ADD downloads/${SQLCL_ZIP} /opt/
-RUN cd /opt && unzip ${SQLCL_ZIP}
+RUN cd /opt && unzip -q ${SQLCL_ZIP}
 
 # downloads/ords-XXX.zip
 ARG ORDS_ZIP=ords-19.1.0.092.1545.zip
 ADD downloads/${ORDS_ZIP} /opt/
-RUN cd /opt && unzip ${ORDS_ZIP} -d ords && cd ords  && rm -rf  docs examples index.html
+RUN cd /opt && unzip -q ${ORDS_ZIP} -d ords && cd ords  && rm -rf  docs examples index.html
 
 
 # downloads/apex_XXX.zip
 ARG APEX_ZIP=apex_19.1.zip
 ADD downloads/${APEX_ZIP} /opt/
-RUN cd /opt && unzip ${APEX_ZIP}
+RUN cd /opt && unzip -q ${APEX_ZIP}
 
 ######################
 # II) The real image #
