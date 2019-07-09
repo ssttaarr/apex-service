@@ -106,6 +106,9 @@ COPY install_apex.sh ${APEX_HOME}/
 COPY apex_service_install_helper.sql ${APEX_HOME}/
 COPY apex_service_config.sql ${APEX_HOME}/
 
+HEALTHCHECK --start-period=10s \
+        CMD wget -q -O /dev/null http://localhost:8080/i/apex_version.txt || exit 1
+
 # Entrypoint
 COPY entrypoint.sh   /entrypoint.sh
 CMD ["/entrypoint.sh"] 
