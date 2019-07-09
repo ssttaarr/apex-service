@@ -17,5 +17,17 @@ exit"| sql -L $logon
 echo simple install ORDS
 java -jar $ORDS_HOME/ords.war install simple --parameterFile $ORDS_PARAMS 
 
+USER_ID=${TOMCAT_USER_ID:-1000}
+GROUP_ID=${TOMCAT_GROUP_ID:-1000}
+
+###
+# Tomcat user
+###
+groupadd -r tomcat -g ${GROUP_ID} && \
+useradd -u ${USER_ID} -g tomcat -d ${CATALINA_HOME} -s /sbin/nologin \
+	-c "Tomcat user" tomcat
+
+chown -R tomcat:tomcat "${CATALINA_HOME}" "${APEX_HOME}" "${ORDS_HOME}"
+
 echo  Start tomcat 
-catalina.sh run
+exec gosu tomcat catalina.sh run
